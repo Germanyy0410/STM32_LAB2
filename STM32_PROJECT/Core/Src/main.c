@@ -244,7 +244,7 @@ const int MAX_LED = 4;
 int index_led = 0;
 int led_buffer[4] = {1, 2, 3, 4};
 
-int counter = 50;
+int counter = 25;
 int evenCounter = 0;
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
@@ -253,10 +253,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   }
 
   if (counter <= 0) {
-    counter = 50;
+    counter = 25;
     evenCounter++;
 
-    if (evenCounter % 2 == 0) {
+    if (evenCounter % 4 == 0) {
       HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
       evenCounter = 0;
     }
