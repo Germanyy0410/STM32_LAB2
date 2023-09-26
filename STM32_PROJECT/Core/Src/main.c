@@ -58,7 +58,10 @@ void updateClockBuffer();
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+const int MAX_LED = 4;
+int index_led = 0;
+int led_buffer[4] = {1, 2, 3, 4};
+int hour = 15, minute = 8, second = 50;
 /* USER CODE END 0 */
 
 /**
@@ -96,10 +99,45 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  
+  setTimer0(100);
+  setTimer1(25);
 
 	while (1)
 	{
+    if (timer0_flag == 1) {
+      if (second >= 60) {
+        second = 0;
+        minute++;
+      }
 
+      if (minute >= 60) {
+        minute = 0;
+        hour++;
+      }
+
+      if (hour >= 24) {
+        hour = 0;
+      }
+      second++;
+
+      updateClockBuffer(hour, minute);
+
+      HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+
+      setTimer0(100);
+    }
+
+    if (timer1_flag == 1) {
+      if (index_led >= MAX_LED) {
+        index_led = 0;
+      }
+      update7SEG(index_led++);
+
+      HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+
+      setTimer1(25);
+    }
 	}
   /* USER CODE END 3 */
 }
@@ -226,55 +264,12 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-int counter = 25;
-int evenCounter = 0;
 
-const int MAX_LED = 4;
-int index_led = 0;
-int led_buffer[4] = {1, 2, 3, 4};
 
-int hour = 15, minute = 8, second = 50;
+
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-  if (counter > 0) {
-    counter--;
-  }
-
-  if (counter <= 0) {
-    counter = 25;
-    evenCounter++;
-
-    if (evenCounter % 4 == 0) {
-      second++;
-
-      if (second >= 60) {
-        second = 0;
-        minute++;
-      }
-
-      if (minute >= 60) {
-        minute = 0;
-        hour++;
-      }
-
-      if (hour >= 24) {
-        hour = 0;
-      }
-
-      updateClockBuffer();
-
-      HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-      evenCounter = 0;
-    }
-
-    HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-
-    if (index_led >= MAX_LED) {
-      index_led = 0;
-    }
-
-    update7SEG(index_led++);
-  }
+  timerRun();
 }
 
 void display7SEG(int num){
@@ -326,7 +321,7 @@ void update7SEG(int index) {
   }
 }
 
-void updateClockBuffer() {
+void updateClockBuffer(int hour, int minute) {
   led_buffer[0] = hour / 10;
   led_buffer[1] = hour % 10;
   led_buffer[2] = minute / 10;  
