@@ -106,7 +106,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   setTimer0(100);
   setTimer1(25);
-  setTimer2(5);
+  setTimer2(1);
 
   while (1)
   {
@@ -154,7 +154,7 @@ int main(void)
       updateLEDmatrix(index_led_matrix);
       index_led_matrix++;
 
-      setTimer2(5);
+      setTimer2(1);
     } 
   }
   /* USER CODE END 3 */

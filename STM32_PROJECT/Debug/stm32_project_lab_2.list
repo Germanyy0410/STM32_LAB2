@@ -122,8 +122,8 @@ int main(void)
   setTimer1(25);
  800016c:	2019      	movs	r0, #25
  800016e:	f000 f9e5 	bl	800053c <setTimer1>
-  setTimer2(5);
- 8000172:	2005      	movs	r0, #5
+  setTimer2(1);
+ 8000172:	2001      	movs	r0, #1
  8000174:	f000 f9f6 	bl	8000564 <setTimer2>
     //   HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
 
@@ -158,8 +158,8 @@ int main(void)
  80001a0:	4a04      	ldr	r2, [pc, #16]	; (80001b4 <main+0x68>)
  80001a2:	6013      	str	r3, [r2, #0]
 
-      setTimer2(5);
- 80001a4:	2005      	movs	r0, #5
+      setTimer2(1);
+ 80001a4:	2001      	movs	r0, #1
  80001a6:	f000 f9dd 	bl	8000564 <setTimer2>
     if (timer2_flag == 1) {
  80001aa:	e7e5      	b.n	8000178 <main+0x2c>
