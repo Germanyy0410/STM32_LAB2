@@ -355,15 +355,29 @@ void updateClockBuffer(int hour, int minute) {
 }
 
 uint32_t matrix_buffer[8] = {
-		0,
-		ROW2_Pin|ROW3_Pin|ROW4_Pin|ROW5_Pin|ROW6_Pin|ROW7_Pin,
-		ROW1_Pin|ROW2_Pin|ROW3_Pin|ROW4_Pin|ROW5_Pin|ROW6_Pin|ROW7_Pin,
-    ROW0_Pin|ROW1_Pin|ROW4_Pin|ROW5_Pin,
-    ROW0_Pin|ROW1_Pin|ROW4_Pin|ROW5_Pin,
-		ROW1_Pin|ROW2_Pin|ROW3_Pin|ROW4_Pin|ROW5_Pin|ROW6_Pin|ROW7_Pin,
-		ROW2_Pin|ROW3_Pin|ROW4_Pin|ROW5_Pin|ROW6_Pin|ROW7_Pin,
-    0
+  ENM3_Pin|ENM4_Pin,
+  ENM2_Pin|ENM5_Pin,
+  ENM1_Pin|ENM2_Pin|ENM5_Pin|ENM6_Pin,
+  ENM1_Pin|ENM2_Pin|ENM5_Pin|ENM6_Pin,
+  ENM1_Pin|ENM2_Pin|ENM3_Pin|ENM4_Pin|ENM5_Pin|ENM6_Pin,
+  ENM1_Pin|ENM2_Pin|ENM3_Pin|ENM4_Pin|ENM5_Pin|ENM6_Pin,
+  ENM1_Pin|ENM2_Pin|ENM5_Pin|ENM6_Pin,
+  ENM1_Pin|ENM2_Pin|ENM5_Pin|ENM6_Pin,
 };
+
+
+/*
+0 0 0 x x 0 0 0
+0 0 x     x 0 0
+0 x x     x x 0
+0 x x     x x 0
+0 x x x x x x 0
+0 x x x x x x 0
+0 x x     x x 0
+0 x x     x x 0
+
+*/
+
 
 void resetState() {
 	HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, SET);
@@ -386,35 +400,37 @@ void resetState() {
 }
 
 void updateLEDmatrix(int index) {
-    resetState();
+  resetState();
 	switch(index){
 	case 0:
+		HAL_GPIO_WritePin(ROW0_GPIO_Port, ROW0_Pin, RESET);
 		break;
 	case 1:
-		HAL_GPIO_WritePin(ENM1_GPIO_Port, ENM1_Pin, RESET);
+		HAL_GPIO_WritePin(ROW1_GPIO_Port, ROW1_Pin, RESET);
 		break;
 	case 2:
-		HAL_GPIO_WritePin(ENM2_GPIO_Port, ENM2_Pin, RESET);
+		HAL_GPIO_WritePin(ROW2_GPIO_Port, ROW2_Pin, RESET);
 		break;
 	case 3:
-		HAL_GPIO_WritePin(ENM3_GPIO_Port, ENM3_Pin, RESET);
+		HAL_GPIO_WritePin(ROW3_GPIO_Port, ROW3_Pin, RESET);
 		break;
 	case 4:
-		HAL_GPIO_WritePin(ENM4_GPIO_Port, ENM4_Pin, RESET);
+		HAL_GPIO_WritePin(ROW4_GPIO_Port, ROW4_Pin, RESET);
 		break;
 	case 5:
-		HAL_GPIO_WritePin(ENM5_GPIO_Port, ENM5_Pin, RESET);
+		HAL_GPIO_WritePin(ROW5_GPIO_Port, ROW5_Pin, RESET);
 		break;
 	case 6:
-		HAL_GPIO_WritePin(ENM6_GPIO_Port, ENM6_Pin, RESET);
+		HAL_GPIO_WritePin(ROW6_GPIO_Port, ROW6_Pin, RESET);
 		break;
 	case 7:
+		HAL_GPIO_WritePin(ROW7_GPIO_Port, ROW7_Pin, RESET);
 		break;
 	default:
 		break;
 	}
 
-	HAL_GPIO_WritePin(GPIOB, matrix_buffer[index], RESET);
+	HAL_GPIO_WritePin(GPIOA, matrix_buffer[index], RESET);
 }
 /* USER CODE END 4 */
 
