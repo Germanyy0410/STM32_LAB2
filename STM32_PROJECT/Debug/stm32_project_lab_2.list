@@ -284,8 +284,8 @@ int main(void)
       shiftLeft();
  800025e:	f000 fc23 	bl	8000aa8 <shiftLeft>
 
-      setTimer3(1000);
- 8000262:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
+      setTimer3(500);
+ 8000262:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
  8000266:	f000 fc9f 	bl	8000ba8 <setTimer3>
     if (timer0_flag == 1) {
  800026a:	e788      	b.n	800017e <main+0x32>
@@ -543,17 +543,17 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, ENM0_Pin|ENM1_Pin|DOT_Pin|LED_RED_Pin
- 80003ec:	2201      	movs	r2, #1
+ 80003ec:	2200      	movs	r2, #0
  80003ee:	f64f 71fc 	movw	r1, #65532	; 0xfffc
  80003f2:	4816      	ldr	r0, [pc, #88]	; (800044c <MX_GPIO_Init+0xa4>)
  80003f4:	f000 ffe6 	bl	80013c4 <HAL_GPIO_WritePin>
                           |EN0_Pin|EN1_Pin|EN2_Pin|EN3_Pin
                           |ENM2_Pin|ENM3_Pin|ENM4_Pin|ENM5_Pin
-                          |ENM6_Pin|ENM7_Pin, GPIO_PIN_SET);
+                          |ENM6_Pin|ENM7_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, SEG0_Pin|SEG1_Pin|SEG2_Pin|ROW2_Pin
- 80003f8:	2201      	movs	r2, #1
+ 80003f8:	2200      	movs	r2, #0
  80003fa:	f64f 717f 	movw	r1, #65407	; 0xff7f
  80003fe:	4814      	ldr	r0, [pc, #80]	; (8000450 <MX_GPIO_Init+0xa8>)
  8000400:	f000 ffe0 	bl	80013c4 <HAL_GPIO_WritePin>
